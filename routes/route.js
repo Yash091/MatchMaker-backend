@@ -5,6 +5,8 @@ import {
   getUser,
   deleteUser,
   editUser,
+  getAllUser,
+  getDetail
 } from "../controller/user-controller.js";
 import upload from "../utils/upload.js";
 import { authenticate } from "../controller/authentication.js";
@@ -16,6 +18,8 @@ router.post("/file/upload", upload.single("file"), uploadImage);
 router.post("/login", logUser);
 router.get("/file/:filename", getImage);
 router.get("/getuser", authenticate, getUser);
+router.get("/getalluser",getAllUser);
 router.delete("/deleteprofile", authenticate, deleteUser);
-router.post("/editprofile", editUser);
+router.post("/editprofile" , editUser);
+router.get("/getdetail/:id",getDetail)
 export default router;

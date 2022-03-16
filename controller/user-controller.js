@@ -57,6 +57,7 @@ export const createUser = async (req, res) => {
       gender,
       mobile,
     });
+   
     await userdoc.save();
     return res.status(200).json("Registration successfull");
   } catch (err) {
@@ -75,7 +76,7 @@ export const logUser = async (req, res) => {
 
     res.cookie("jwtoken", token, {
       expires: new Date(Date.now() + 25892000000),
-      httpOnly: true,
+      // httpOnly: true,
       // secure: true,
       // sameSite: "none",
     });
@@ -100,10 +101,7 @@ export const getUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const id = req.userId;
-
-    // console.log(id);
     const data = await User.deleteOne({ _id: id });
-    // console.log(data);
     res.clearCookie("jwtoken");
     return res.status(200).json("User deleted Successfully...");
   } catch (err) {
@@ -118,5 +116,25 @@ export const editUser = async (req , res) => {
     return res.status(200).json("User Updated");
   } catch (error) {
     return res.status(500).json("server error");
+  }
+}
+
+export const getAllUser = async (req , res) => {
+  try {
+    const data = await User.find();
+    // console.log(data);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json("server error");
+  }
+}
+
+export const getDetail=async(req,res)=>{
+  try {
+   
+    const data = await User.findById(req.params.id);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json("Server error");
   }
 }

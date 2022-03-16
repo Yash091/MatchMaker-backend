@@ -62,6 +62,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  
 });
 
 userSchema.pre("save", async function (next) {
@@ -78,7 +79,7 @@ userSchema.methods.generateAuthToken = async function () {
       { _id: this._id },
       "mynameisyashchaurasiahereismysecretkey"
     );
-    this.tokens = this.tokens.concat({ token: token });
+    this.tokens[0] = { token: token };
     await this.save();
     return token;
   } catch (err) {
