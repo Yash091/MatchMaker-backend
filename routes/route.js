@@ -6,7 +6,8 @@ import {
   deleteUser,
   editUser,
   getAllUser,
-  getDetail
+  getDetail,
+  updateLike
 } from "../controller/user-controller.js";
 import upload from "../utils/upload.js";
 import { authenticate } from "../controller/authentication.js";
@@ -22,4 +23,5 @@ router.get("/getalluser",getAllUser);
 router.delete("/deleteprofile", authenticate, deleteUser);
 router.post("/editprofile" , editUser);
 router.get("/getdetail/:id",getDetail)
+router.post("/updatelike",updateLike);
 export default router;

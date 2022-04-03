@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -54,6 +55,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  likedby:[String],
+  liked: [String],
   tokens: [
     {
       token: {

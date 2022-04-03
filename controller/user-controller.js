@@ -129,12 +129,31 @@ export const getAllUser = async (req , res) => {
   }
 }
 
-export const getDetail=async(req,res)=>{
+export const getDetail = async (req , res) => {
   try {
-   
     const data = await User.findById(req.params.id);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json("Server error");
   }
 }
+
+export const updateLike = async (req , res)=>{
+  try {
+    const likedby = req.body.likedby;
+    const liked = req.body.liked;
+    
+    // let data = await User.findById({_id:likedby});
+    // data.liked.push({id:liked});
+    // await User.save();
+    const data = await User.findByIdAndUpdate({_id:likedby},{$addToSet:{liked:liked}});
+    const data1 = await User.findByIdAndUpdate({_id:liked},{$addToSet:{likedby:likedby}});
+    // console.log(data);
+    // console.log(data1);
+
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json("Server error");
+  }
+}
+
