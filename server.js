@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { Connection } from "./database/db.js";
+import { Server } from "socket.io";
 const app = express();
 
 app.use(
@@ -21,7 +22,32 @@ const PORT = process.env.PORT || 8000;
 app.get("/", (req, res) => {
   res.send("Hello");
 });
-app.listen(PORT, () => {
+
+const server = app.listen(PORT, () => {
   console.log(`listening to port ${PORT}!`);
 });
+
 Connection();
+
+/////////////////////////////////////////////////////////////////////////////////
+const io = new Server(server,{
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+io.on("connection", (socket) => {
+  console.log("someone is connected");
+
+  socket.on("newuser" , username => {
+      console.log(username);
+  })
+
+  socket.on("liked", (sender , receiver) => {
+      io.emit("getnotification",{sender , receiver});
+  })
+
+  socket.on("disconnect", () => {
+      console.log("disconnected");
+  });
+});

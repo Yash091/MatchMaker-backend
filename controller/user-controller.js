@@ -84,7 +84,7 @@ export const logUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) return res.status(422).json("Invalid credentials");
-    return res.status(200).json({ message: "User logged in successfully" });
+    return res.status(200).json({ message: "User logged in successfully",user });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -113,7 +113,8 @@ export const editUser = async (req , res) => {
   try {
     const id = req.body._id;
     const updatedUser = await User.findByIdAndUpdate({_id: id} , {$set: req.body});
-    return res.status(200).json("User Updated");
+    console.log(updatedUser);
+    return res.status(200).json({message: "User Updated" , updatedUser});
   } catch (error) {
     return res.status(500).json("server error");
   }
