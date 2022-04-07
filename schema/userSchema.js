@@ -55,8 +55,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  likedby:[String],
-  liked: [String],
+  likedby:[
+    {
+      type:Object
+    }
+  ],
+  liked: [
+    {
+      type:Object
+    }
+  ],
   tokens: [
     {
       token: {

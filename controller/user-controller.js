@@ -112,8 +112,8 @@ export const deleteUser = async (req, res) => {
 export const editUser = async (req , res) => {
   try {
     const id = req.body._id;
-    const updatedUser = await User.findByIdAndUpdate({_id: id} , {$set: req.body});
-    console.log(updatedUser);
+    const updatedUser = await User.findByIdAndUpdate({_id: id} , {$set: req.body},{new:true});
+    
     return res.status(200).json({message: "User Updated" , updatedUser});
   } catch (error) {
     return res.status(500).json("server error");
@@ -141,20 +141,116 @@ export const getDetail = async (req , res) => {
 
 export const updateLike = async (req , res)=>{
   try {
-    const likedby = req.body.likedby;
-    const liked = req.body.liked;
-    
-    // let data = await User.findById({_id:likedby});
+    const likedby = req.body.likedby; // currUser
+    const liked = req.body.liked; // Whim currUser has liked
+    let user1 = await User.findById({_id:likedby});
+    let user2 = await User.findById({_id:liked});
+    // console.log(user1 , user2);
+    const obj1 = {
+        _id: likedby,
+        name: user1.name,
+        picture: user1.picture,
+        profession: user1.profession  
+      };
+      const obj2 ={
+      _id: liked,
+      name : user2.name,
+      picture : user2.picture,
+      profession:user2.profession
+    }
     // data.liked.push({id:liked});
     // await User.save();
-    const data = await User.findByIdAndUpdate({_id:likedby},{$addToSet:{liked:liked}});
-    const data1 = await User.findByIdAndUpdate({_id:liked},{$addToSet:{likedby:likedby}});
-    // console.log(data);
-    // console.log(data1);
-
+    const data = await User.findByIdAndUpdate({
+      _id: likedby
+    }, {
+      $push: {
+        liked: {
+      _id: liked,
+      name : user2.name,
+      picture : user2.picture,
+      profession:user2.profession
+        }
+      }
+    }, {
+      new: true
+    });
+    const data1 = await User.findByIdAndUpdate({
+      _id: liked
+    }, {
+      $push: {
+        likedby: {
+          
+          _id: likedby,
+          name: user1.name,
+          picture: user1.picture,
+          profession: user1.profession  
+        }
+      }
+    }, {
+      new: true
+    });
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json("Server error");
   }
 }
 
+export const updateDislike = async (req , res)=>{
+  try {
+    console.log("before");
+    const dislikedby = req.body.dislikedby; // currUser
+    const disliked = req.body.disliked; // Whim currUser has liked
+    let user1 = await User.findById({_id:dislikedby});
+    let user2 = await User.findById({_id:disliked});
+    // console.log(user1 , user2);
+    const obj1 = {
+        _id: dislikedby,
+        name: user1.name,
+        picture: user1.picture,
+        profession: user1.profession  
+      };
+      const obj2 ={
+      _id: disliked,
+      name : user2.name,
+      picture : user2.picture,
+      profession:user2.profession
+    }
+    // data.liked.push({id:liked});
+    // await User.save();
+    const data = await User.findByIdAndUpdate({
+      _id: dislikedby
+    }, {
+      $pull: {
+        liked: {
+      _id: disliked,
+      name : user2.name,
+      picture : user2.picture,
+      profession:user2.profession
+        }
+      }
+    }, {
+      new: true
+    });
+    const data1 = await User.findByIdAndUpdate({
+      _id: disliked
+    }, {
+      $pull: {
+        likedby: {
+          
+          _id: dislikedby,
+          name: user1.name,
+          picture: user1.picture,
+          profession: user1.profession  
+        }
+      }
+    }, {
+      new: true
+    });
+    // console.log(data);
+    // console.log(data1);
+    console.log("after");
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json("Server error");
+  }
+}
