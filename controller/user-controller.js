@@ -122,7 +122,8 @@ export const editUser = async (req , res) => {
 
 export const getAllUser = async (req , res) => {
   try {
-    const data = await User.find();
+    const id = req.params.id;
+    const data = await User.find({_id:{$ne:id}});
     // console.log(data);
     return res.status(200).json(data);
   } catch (error) {

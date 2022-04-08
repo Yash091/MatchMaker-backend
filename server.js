@@ -33,18 +33,24 @@ Connection();
 const io = new Server(server,{
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
+    credentials: true,
   },
 });
+
 io.on("connection", (socket) => {
   console.log("someone is connected");
-
-  socket.on("newuser" , username => {
-      console.log(username);
+  
+  socket.on("setup" , ({sender}) => {
+    // console.log(sender._id);
+    socket.join(sender._id);
+    console.log(`${sender.name} joined room : ${sender._id}`);
+    
   })
-
-  socket.on("liked", (sender , receiver) => {
-      io.emit("getnotification",{sender , receiver});
+  
+  socket.on("sendNotification", ({sender , receiver}) => {
+    // console.log(receiver)
+      socket.in(receiver._id).emit("getNotification",sender);
   })
 
   socket.on("disconnect", () => {

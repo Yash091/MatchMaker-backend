@@ -20,7 +20,7 @@ router.post("/file/upload", upload.single("file"), uploadImage);
 router.post("/login", logUser);
 router.get("/file/:filename", getImage);
 router.get("/getuser", authenticate, getUser);
-router.get("/getalluser",getAllUser);
+router.get("/getalluser/:id",getAllUser);
 router.delete("/deleteprofile", authenticate, deleteUser);
 router.post("/editprofile" , editUser);
 router.get("/getdetail/:id",getDetail)
