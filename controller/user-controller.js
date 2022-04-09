@@ -92,7 +92,8 @@ export const logUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
-    return res.status(200).json(req.rootUser);
+    const data = await User.findById(req.userId);
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json("Server error");
   }
