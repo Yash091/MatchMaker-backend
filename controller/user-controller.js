@@ -144,7 +144,7 @@ export const getDetail = async (req , res) => {
 export const updateLike = async (req , res)=>{
   try {
     const likedby = req.body.likedby; // currUser
-    const liked = req.body.liked; // Whim currUser has liked
+    const liked = req.body.liked; // Whom currUser has liked
     let user1 = await User.findById({_id:likedby});
     let user2 = await User.findById({_id:liked});
     // console.log(user1 , user2);
