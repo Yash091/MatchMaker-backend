@@ -8,7 +8,11 @@ import {
   getAllUser,
   getDetail,
   updateLike,
-  updateDislike
+  updateDislike,
+  allUsers,
+  removeNotification,
+  clearNotification,
+  logoutUser
 } from "../controller/user-controller.js";
 import upload from "../utils/upload.js";
 import { authenticate } from "../controller/authentication.js";
@@ -21,9 +25,13 @@ router.post("/login", logUser);
 router.get("/file/:filename", getImage);
 router.get("/getuser", authenticate, getUser);
 router.get("/getalluser/:id",getAllUser);
+router.get("/allUsers", allUsers);
 router.delete("/deleteprofile", authenticate, deleteUser);
 router.post("/editprofile" , editUser);
 router.get("/getdetail/:id",getDetail)
 router.post("/updatelike",updateLike);
 router.post("/updatedislike",updateDislike);
+router.post("/removenotification",removeNotification)
+router.post("/clearnotification",clearNotification)
+router.get("/logout",authenticate,logoutUser);
 export default router;

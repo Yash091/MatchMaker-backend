@@ -41,6 +41,9 @@ const io = new Server(server,{
 io.on("connection", (socket) => {
   console.log("someone is connected");
   
+  // console.log(`${socket.handshake.query.name} joined room : ${socket.handshake.query.id}`);
+  // socket.join(socket.handshake.query.id);
+  
   socket.on("setup" , ({sender}) => {
     // console.log(sender._id);
     socket.join(sender._id);

@@ -9,7 +9,7 @@ export const Connection = () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     })
-    .then(() => console.log("Connection to database is successfully made..."))
+    .then(() => console.log("Connection to database is made successfully..."))
     .catch((err) => {
       console.log(err);
     });

@@ -55,25 +55,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  likedby:[
-    {
-      type:Object
-    }
-  ],
-  liked: [
-    {
-      type:Object
-    }
-  ],
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
+  likedby: [{
+    type: Object
+  }],
+  liked: [{
+    type: Object
+  }],
+  notifications: [{
+    type: Object
+  }],
+  tokens: [{
+    token: {
+      type: String,
+      required: true,
     },
-  ],
-  
+  }, ],
+
 });
 
 userSchema.pre("save", async function (next) {
@@ -86,11 +83,14 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.generateAuthToken = async function () {
   try {
-    let token = jwt.sign(
-      { _id: this._id },
+    let token = jwt.sign({
+        _id: this._id
+      },
       "mynameisyashchaurasiahereismysecretkey"
     );
-    this.tokens[0] = { token: token };
+    this.tokens[0] = {
+      token: token
+    };
     await this.save();
     return token;
   } catch (err) {
