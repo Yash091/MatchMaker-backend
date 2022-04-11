@@ -55,6 +55,10 @@ io.on("connection", (socket) => {
     // console.log(receiver)
       socket.in(receiver._id).emit("getNotification", {sender: sender , type: type});
   })
+  socket.on("send message",({content,id}) => {
+      console.log(content,id);
+      socket.in(id).emit("new message",content);
+  })
 
   socket.on("disconnect", () => {
       console.log("disconnected");

@@ -24,6 +24,6 @@ export const getImage = async (request, response) => {
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(response);
   } catch (error) {
-    response.status(500).json("Failed to fetch image", error);
+    response.status(500).json("Failed to fetch image");
   }
 };
