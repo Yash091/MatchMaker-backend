@@ -39,7 +39,7 @@ export const createUser = async (req, res) => {
     const exist = await User.findOne({
       email: email
     });
-    if (exist) return res.status(200).json({mwssage:"Email already exists!"});
+    if (exist) return res.status(200).json({message:"Email already exists!"});
     if (password !== cpassword)
       return res
         .status(200)
@@ -362,5 +362,28 @@ export const logoutUser = async(req,res)=>{
     res.status(200).json(req.rootUser)
   } catch (error) {
     res.status(500).json({message:"server error",error});
+  }
+}
+
+export const saveNotification = async (req , res) => {
+  try {
+    console.log(req.body);
+    const id1 = req.body.receiverId;
+    const id2 = req.body.senderId;
+    const pic = req.body.picture;
+    const name = req.body.name;
+    const data = await User.findByIdAndUpdate({_id:id1} , {
+      $addToSet: {
+        notifications: {
+          _id: id2,
+          type: 2,
+          message: `${name} has liked your profile`,
+          picture: pic,
+        },
+      },
+    }, {new: true});
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json({message:"server error",error});
   }
 }

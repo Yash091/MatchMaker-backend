@@ -12,7 +12,8 @@ import {
   allUsers,
   removeNotification,
   clearNotification,
-  logoutUser
+  logoutUser,
+  saveNotification,
 } from "../controller/user-controller.js";
 import upload from "../utils/upload.js";
 import { 
@@ -48,7 +49,7 @@ router.get("/logout",authenticate,logoutUser);
 router.post("/accesschat",authenticate,accessChat)
 router.get("/allchats" , allChats);
 router.get("/allmessages/:chatId", allMessages);
-router.post("/sendmessage",authenticate,sendMessage)
-
+router.post("/sendmessage",authenticate,sendMessage);
+router.post("/savenotification", saveNotification);
 
 export default router;
