@@ -1,15 +1,18 @@
+import dotenv from "dotenv/config";
 import express from "express";
 import Router from "./routes/route.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+
 import { Connection } from "./database/db.js";
 import { Server } from "socket.io";
 const app = express();
 
+
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://matchmakerweb.herokuapp.com"],
     credentials: true,
   })
 );

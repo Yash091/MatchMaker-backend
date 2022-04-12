@@ -86,7 +86,7 @@ userSchema.methods.generateAuthToken = async function () {
     let token = jwt.sign({
         _id: this._id
       },
-      "mynameisyashchaurasiahereismysecretkey"
+      process.env.SECRET_KEY
     );
     this.tokens[0] = {
       token: token

@@ -9,7 +9,7 @@ export const authenticate = async (req, res, next) => {
     if (!token) {
       return res.status(200).json("No token found");
     }
-    const verify = jwt.verify(token, "mynameisyashchaurasiahereismysecretkey");
+    const verify = jwt.verify(token, process.env.SECRET_KEY);
     const rootUser = await User.findOne({
       _id: verify._id,
     });

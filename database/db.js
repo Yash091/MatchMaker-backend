@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const DB =
-  "mongodb+srv://yash091:8542955586@cluster0.sedvy.mongodb.net/Matrimony?retryWrites=true&w=majority";
+const DB = process.env.MONGO_URI;
+
 export const Connection = () => {
   mongoose
     .connect(DB, {
