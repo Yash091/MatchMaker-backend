@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://matchmakerweb.herokuapp.com"],
+    origin: "*",
     credentials: true,
   })
 );
