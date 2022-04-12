@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: ["https://matchmakerweb.herokuapp.com","https://matchmakercl.netlify.app/"],
     credentials: true,
   })
 );
@@ -36,7 +36,7 @@ Connection();
 const io = new Server(server,{
   pingTimeout: 60000,
   cors: {
-    origin: "*",
+    origin: ["https://matchmakerweb.herokuapp.com","https://matchmakercl.netlify.app/"],
     credentials: true,
   },
 });
