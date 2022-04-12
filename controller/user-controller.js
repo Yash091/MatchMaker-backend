@@ -371,6 +371,7 @@ export const saveNotification = async (req , res) => {
     const id1 = req.body.receiverId;
     const id2 = req.body.senderId;
     const pic = req.body.picture;
+    
     const name = req.body.name;
     const data = await User.findByIdAndUpdate({_id:id1} , {
       $addToSet: {
