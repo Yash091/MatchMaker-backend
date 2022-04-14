@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://matchmakerweb.herokuapp.com","https://matchmakercl.netlify.app","http://localhost:3000"],
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
@@ -22,6 +22,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/", Router);
 const PORT = process.env.PORT || 8000;
+app.use(express.static(path.join(__dirname, "/MatchMaker-frontend/build")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/MatchMaker-frontend/build', 'index.html'));
+});
 app.get("/", (req, res) => {
   res.send("Hello");
 });
@@ -36,8 +41,8 @@ Connection();
 const io = new Server(server,{
   pingTimeout: 60000,
   cors: {
-    origin: ["https://matchmakerweb.herokuapp.com","https://matchmakercl.netlify.app","http://localhost:3000"],
-    credentials: true,
+    origin: ["http://localhost:3000"],
+    
   },
 });
 

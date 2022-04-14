@@ -83,7 +83,7 @@ export const logUser = async (req, res) => {
 
     res.cookie("jwtoken", token, {
       expires: new Date(Date.now() + 25892000000),
-      // httpOnly: true,
+      httpOnly: true,
       // secure: true,
       // sameSite: "none",
     });
@@ -248,7 +248,7 @@ export const updateLike = async (req, res) => {
 
 export const updateDislike = async (req, res) => {
   try {
-    console.log("before");
+    // console.log("before");
     const dislikedby = req.body.dislikedby; // currUser
     const disliked = req.body.disliked; // Whim currUser has liked
     let user1 = await User.findById({
@@ -308,7 +308,7 @@ export const updateDislike = async (req, res) => {
     });
     // console.log(data);
     // console.log(data1);
-    console.log("after");
+    // console.log("after");
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({message: "Server error"});
@@ -342,7 +342,7 @@ export const removeNotification=async(req,res)=>{
 export const clearNotification=async(req,res)=>{
   try {
     const id = req.body.id;
-    console.log(id);
+    // console.log(id);
     const data = await User.findByIdAndUpdate({_id:id},{
       $set:{
         'notifications':[]
@@ -367,7 +367,7 @@ export const logoutUser = async(req,res)=>{
 
 export const saveNotification = async (req , res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const id1 = req.body.receiverId;
     const id2 = req.body.senderId;
     const pic = req.body.picture;
