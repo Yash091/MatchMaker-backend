@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/", Router);
 const PORT = process.env.PORT || 8000;
+
 app.get("/", (req, res) => {
   res.send("Hello");
 });
