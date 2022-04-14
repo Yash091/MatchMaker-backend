@@ -84,8 +84,8 @@ export const logUser = async (req, res) => {
     res.cookie("jwtoken", token, {
       expires: new Date(Date.now() + 25892000000),
       httpOnly: true,
-      // secure: true,
-      // sameSite: "none",
+      secure: true,
+      sameSite: "none",
     });
 
     const isMatch = await bcrypt.compare(password, user.password);
